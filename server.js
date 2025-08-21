@@ -17,15 +17,24 @@ devolva numeros aleatorios na seguinte lógica:
 Acesse a página /random e atualize-a para testar sua lógica
 */
 
-app.get("/random", (req, res) => {
-  res.render("random", {
-    /* --> */ ultimoNumero: 0,
-    numeroAtual: 0 /* <-- Valores aqui */,
-  });
-});
+function criaGeradorAleatorio() {
+  let ultimoNumero = null;
+  return function aleatoriador() {
+    const numeroAtual = Math.floor(Math.random() * 11);
+    const resultado = { ultimoNumero, numeroAtual };
+    ultimoNumero = numeroAtual;
+    return resultado;
+  };
+}
 
-app.get("/inverter", (req, res) => {
-  res.render("inverter");
+const geraNumeroAleatorio = criaGeradorAleatorio();
+
+app.get("/random", (req, res) => {
+  const { ultimoNumero, numeroAtual } = geraNumeroAleatorio();
+  res.render("random", {
+    ultimoNumero,
+    numeroAtual,
+  });
 });
 
 /*
@@ -36,11 +45,22 @@ Seu programa deve funcionar de modo que, ao acessar o endereço /random,
 você deve ser capaz de digitar uma palavra, apertar o botão de enviar e
 receber a palavra invertida no alert.
 */
+app.get("/inverter", (req, res) => {
+  res.render("inverter");
+});
+
 app.get("/api/inverter/:palavraParaInverter", (req, res) => {
   const palavraParaInverter = req.params.palavraParaInverter;
-  const invertida = "PALAVRA_INVERTIDA_AQUI";
+  const invertida = inverterPalavra(palavraParaInverter);
   res.json(invertida);
 });
+
+function inverterPalavra(palavra) {
+  if (palavra === "") {
+    return "";
+  }
+  return inverterPalavra(palavra.substring(1)) + palavra.charAt(0);
+}
 
 /*
 3) A função pegaCorDeFundo é uma função de alta ordem que recebe três funções como parâmetro:
@@ -61,11 +81,23 @@ function pegaCorDeFundo(pegaVermelho, pegaVerde, pegaAzul) {
 
 // Crie as funções abaixo
 
+function pegaVermelho() {
+  return Math.floor(Math.random() * 256);
+}
+
+function pegaVerde() {
+  return Math.floor(Math.random() * 256);
+}
+
+function pegaAzul() {
+  return Math.floor(Math.random() * 256);
+}
+
 // Crie as funções acima
 
 app.get("/cores", (req, res) => {
   // Corrigir aqui!
-  const corDeFundo = pegaCorDeFundo(pegaVermelho, ...;
+  const corDeFundo = pegaCorDeFundo(pegaVermelho, pegaVerde, pegaAzul); 
   res.render("cores", { corDeFundo });
 });
 
