@@ -72,8 +72,8 @@ app.get("/cores", (req, res) => {
 /*
 4) Utilize a função map (obrigatório) e o que mais for necessário
 para implementar o seguinte comportamento:
-- Ao acessar /dobrar, você também deve passar dois números: início e fim,
-da seguinte forma: /dobrar/5/10, por exemplo
+- Ao acessar /dobros, você também deve passar dois números: início e fim,
+da seguinte forma: /dobros/5/10, por exemplo
 - Esses valores chegam nas variáveis "inicio" e "fim"
 - Deste modo, você deve fazer com que ao acessar a página,
 mostre na tela os dobros dos números entre o início e o fim
