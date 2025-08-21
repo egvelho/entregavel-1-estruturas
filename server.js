@@ -82,8 +82,8 @@ que são os dobros de [5, 6, 7, 8, 9, 10]
 É OBRIGATÓRIO UTILIZAR A FUNÇÃO MAP
 */
 app.get("/dobros/:inicio/:fim", (req, res) => {
-  const inicio = req.params.inicio;
-  const fim = req.params.fim;
+  const inicio = +req.params.inicio;
+  const fim = +req.params.fim;
   const dobros = []; // Dobros aqui;
   res.render("dobros", { dobros: dobros.join(", ") });
 });
